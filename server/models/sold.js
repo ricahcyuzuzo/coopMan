@@ -5,6 +5,7 @@ const soldSchema = mongoose.Schema({
   produce: Object,
   price: Number,
   quantity: Number,
+  cooperative: Object,
 });
 
 const soldModel = mongoose.model('sold', soldSchema);

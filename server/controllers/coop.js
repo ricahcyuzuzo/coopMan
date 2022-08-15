@@ -95,7 +95,7 @@ export const getProduce = (req, res) => {
   })
 }
 
-export const registerWasted = (req, res) => {
+export const registerWasted = async (req, res) => {
   const { produce_id , quantity, trimester } = req.body;
 
   const wholeProduce = await Produce.findById(produce_id).exec();
@@ -110,8 +110,21 @@ export const registerWasted = (req, res) => {
     produce,
     quantity,
     trimester,
-  })
+  });
 
-
-
+  wasted
+    .save()
+    .then(() => {
+      Produce.findByIdAndUpdate({_id: produce_id}, { quantity: wholeProduce.quantity - quantity }).exec().then(() => {
+        res.status(201).json({
+          message: 'The product wasted registered successful',
+          wasted
+        });
+      }).catch(err => {
+        res.status(500).json({
+          message: 'Something went wrong',
+          error: err
+        });
+      })
+    })
 }
