@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node ./server/app.js"
+    "dev": "nodemon --exec babel-node ./server/app.js",
+    "build": "babel server --out-dir dist",
+    "start": "node --require @babel/polyfill dist/app.js "
   },
   "keywords": [],
   "author": "",
