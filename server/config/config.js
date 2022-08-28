@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const mongoConnect = () => {
-  mongoose.connect('mongodb+srv://coopman:kigali123@cluster0.jnorhku.mongodb.net/?retryWrites=true&w=majority', {
+  mongoose.connect('mongodb://localhost:27017/cooperative_management', {
     useUnifiedTopology: true,
     useNewUrlParser: true
   });
