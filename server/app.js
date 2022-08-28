@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import mongoConnect from './config/config';
 import authRoutes from './routes/auth';
 import adminRoutes from './routes/admin';
@@ -14,16 +15,18 @@ app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', coopRoutes);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, content-type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', true)
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-    return res.status(200).json({});
-  }
-  return next();
-});
+app.use(cors({
+  origin: '*'
+}));
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, content-type, Accept, Authorization');
+//   if (req.method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+//     return res.status(200).json({});
+//   }
+//   return next();
+// });
 
 
 app.get('/', (req, res) => {
