@@ -1,10 +1,20 @@
 import Mongoose from 'mongoose';
 import { comparingPassword, generateToken, hashingPassword } from "../helpers/authentication";
+import { validateSignup } from '../helpers/authValidate';
+import { createUser } from '../models/body/auth.body';
 import User from "../models/users";
 
 
 export const createAccount = (req, res) => {
   const { cooperative, email, password } = req.body;
+
+  const { error } = validateSignup(createUser(req));
+  
+  if(error){
+    return res.status(400).json({
+      message: error.details[0].message.replace(/"/g, '')
+    });
+  }
 
   User.find({ email }, (error, result) => {
     if(result.length > 0){
@@ -40,7 +50,9 @@ export const createAccount = (req, res) => {
 }
 
 export const Login = (req, res) => {
+  console.log(req)
   const { email, password } = req.body;
+  console.log(email, password)
   User.findOne({ email })
     .exec()
     .then((doc) => {
@@ -49,6 +61,7 @@ export const Login = (req, res) => {
         if(doc){
           res.status(200).json({
             token: generateToken(doc),
+            userType: doc.type
           });
         }else{
           res.status(401).json({

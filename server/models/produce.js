@@ -4,8 +4,9 @@ const produceSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: String,
   quantity: Number,
-  trimester: String,
   cooperative: Object,
+  fertilizer: Object,
+  pesticide: Object,
   created_at: String,
   updated_at: String,
 });

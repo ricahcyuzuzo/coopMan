@@ -5,7 +5,8 @@ const usersSchema = mongoose.Schema({
   cooperative: String,
   email: String,
   password: String,
-  type: String
+  type: String,
+  location: String,
 });
 
 const userModel = mongoose.model('users', usersSchema);

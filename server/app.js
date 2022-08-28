@@ -37,5 +37,7 @@ app.use((req, res) => {
   });
 });
 
-app.listen(6000,() => console.log('Listening on localhost on port 5000'));
+const port = 6000;
+
+app.listen(port ,() => console.log('Listening on localhost on port ' + port));
 mongoConnect();

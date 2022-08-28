@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const mongoConnect = () => {
-  mongoose.connect('mongodb://localhost:27017/coop_management', {
+  mongoose.connect('mongodb://localhost:27017/cooperative_management', {
     useUnifiedTopology: true,
     useNewUrlParser: true
   });
