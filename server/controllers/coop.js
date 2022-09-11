@@ -188,10 +188,10 @@ export const getTotalCategory = async (req, res) => {
   const sold = await Transaction.find({ type: 'sell_produce' }).exec();
   const wasted = await Transaction.find({ type: 'wasted_produce' }).exec();  
   const crops = await Produce.find().exec();
-
   const produce = crops.filter(item => item.cooperative.user_id ===  decodedToken.user._id);
   const solds = sold.filter(item => item.cooperative.user_id ===  decodedToken.user._id);
   const wastes = wasted.filter(item => item.cooperative.user_id ===  decodedToken.user._id);
+
 
 
   const totalProduceQuantity = produce.reduce((accumulator, object) => {
@@ -217,9 +217,70 @@ export const getTotalCategory = async (req, res) => {
     totalWasted: totalWastedQuantity,
     data: {
       produce: produce,
-      sold: sold,
-      wasted: wasted
+      sold: solds,
+      wasted: wastes
     }
   })
 
+}
+
+export const deleteProduce = (req, res) => {
+  const { produce_id } = req.query;
+  Produce.findByIdAndDelete(produce_id, function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        res.status(202).json({
+          message: "Produce Deleted Successful",
+        })
+    }
+  });
+}
+
+export const updateProduce = (req, res) => {
+  const { produce_id, quantity, name, fertilizer, pesticide } = req.body;
+  Produce.findByIdAndUpdate(produce_id, {
+    name, quantity, fertilizer, pesticide
+  }, (err, docs) => {
+    if (err){
+      console.log(err)
+  }
+  else{
+      res.status(202).json({
+        message: "Produce Updated Successful",
+      })
+  }
+  });
+}
+
+
+export const deleteSoldAndWasted = (req, res) => {
+  const { trans_id } = req.query;
+  Transaction.findByIdAndDelete(trans_id, function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        res.status(202).json({
+          message: "Produce Sold Deleted Successful",
+        })
+    }
+  });
+}
+
+export const updateSoldAndWasted = (req, res) => {
+  const { trans_id, quantity, amount } = req.body;
+  Transaction.findByIdAndUpdate(trans_id, {
+    amount, quantity
+  }, (err, docs) => {
+    if (err){
+      console.log(err)
+  }
+  else{
+      res.status(202).json({
+        message: "Produce Sold Updated Successful",
+      })
+  }
+  });
 }

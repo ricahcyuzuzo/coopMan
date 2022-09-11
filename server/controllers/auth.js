@@ -50,9 +50,7 @@ export const createAccount = (req, res) => {
 }
 
 export const Login = (req, res) => {
-  console.log(req)
   const { email, password } = req.body;
-  console.log(email, password)
   User.findOne({ email })
     .exec()
     .then((doc) => {
